@@ -1,0 +1,83 @@
+{% extends "backend/master.html" %}
+
+{% block mainblock %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Edit Categories</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Edit</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      {% for cat in obj_to_be_update %}
+      <form action="{% url 'categories_list_edit' %}" method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        <div class="row">
+        <div class="col-md">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Edit</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="sr-only" for="article_name">Article Name</label>
+                <input type="text" id="article_name" name="article_name" class="form-control" placeholder="Article Name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="article_short">Article Short Text</label>
+                <input type="text" id="article_short" name="article_short" class="form-control" placeholder="Article Short Text">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="article_author">admin</label>
+                <input type="text" id="article_author" name="article_author" class="form-control" placeholder="{{ cat.pk }}">
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a href="#" class="btn btn-secondary">Cancel</a>
+          <input type="submit" value="Add News" class="btn btn-success float-right">
+        </div>
+      </div>
+      </form>
+      {% endfor %}
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<script type="text/javascript">
+            $(function () {
+                $('#datetimepicker4').datetimepicker({
+                    format: 'L'
+                });
+            });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+    
+{% endblock mainblock %}

@@ -1,0 +1,221 @@
+{% extends "backend/master.html" %}
+
+{% load static %}
+
+{% load humanize % }
+
+{% block mainblock %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Categories List</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Categories</a></li>
+              <li class="breadcrumb-item active">List</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>    
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Categories</h3>
+          
+          <div class="card-tools">
+          <a type="button" class="btn btn-labeled btn-sm btn-default btn-rounded" href="#" data-toggle="modal" data-target="#exampleModal">
+              <span class="btn-label"><i class="fas fa-plus"></i></span>Add Category
+            </a>
+            <a type="button" class="btn btn-labeled btn-sm btn-default btn-rounded" href="#" data-toggle="modal" data-target="#importModal">
+              <span class="btn-label"><i class="fas fa-cloud-upload-alt"></i></span>Import
+            </a>
+            <button type="button" class="btn btn-outline-default btn-rounded waves-effect" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-outline-default btn-rounded waves-effect" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table id="example1" class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 15%">
+                          Category Name
+                      </th>
+                      <th style="width: 60%">
+                          Category Description
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for cat in categories %}
+                  <tr>
+                      <td>
+                          {{ cat.pk }}
+                      </td>
+                      <td>
+                          <a>
+                              {{ cat.category_name }}
+                          </a>
+                          <br/>
+                          <small>
+                              Created <strong>{{ cat.category_date }}</strong>
+                          </small>
+                      </td>
+                      <td>
+                          <small>
+                              {{ cat.category_description }}
+                          </small>                      
+                      </td>
+                      <td class="project-actions text-right">                          
+                          <a type="button" class="btn btn-labeled  btn-sm btn-primary toastsDefaultDanger" href="#">
+                          <span class="btn-label"><i class="fas fa-folder"></i></span>View
+                          </a>                          
+                          <a type="button" class="btn btn-labeled  btn-sm btn-info toastsDefaultDanger" href="#">
+                          <span class="btn-label"><i class="fas fa-pencil-alt"></i></span>Edit
+                          </a>                                                                              
+                          <a type="button" class="btn btn-labeled  btn-sm btn-danger" data-toggle="modal" data-target="#modalDelete{{ cat.id }}">
+                          <span class="btn-label"><i class="fas fa-trash"></i></span>Delete
+                          </a>
+                      </td>
+                  </tr>
+                                  
+                  {% endfor %}                
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+      <div class="card-tools">
+            <a type="button" class="btn btn-labeled btn-sm btn-default btn-rounded" href="{% url 'export_csv' %}" >
+              <span class="btn-label"><i class="fas fa-file-csv"></i></span>CSV
+            </a>
+            <a type="button" class="btn btn-labeled btn-sm btn-default btn-rounded" href="{% url 'export_json' %}" >
+              <span class="btn-label"><i class="fas fa-file"></i></span>JSON
+            </a>
+            <a type="button" class="btn btn-labeled btn-sm btn-default btn-rounded" href="{% url 'export_excel' %}" >
+              <span class="btn-label"><i class="fas fa-file-excel"></i></span>Excel
+            </a>
+          
+          </div>
+    </div>
+
+  </section>
+
+  <!-- / .modal add Category -->
+  <form class="form-horizontal" action="{% url 'categories_list_add' %}" method="post" enctype="multipart/form-data" class="form">
+  {% csrf_token %}
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Category Name:</label>
+            <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Category Description">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Category Description:</label>
+            <textarea class="form-control" id="category_description" name="category_description" placeholder="Category Description"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+  <!-- / .modal import Categories to Database -->
+  <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>Import Data</h3>
+        <p>importing to database</p>
+        <form method="post" action="{% url 'import_data' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="form-group files">
+                <label>Upload Your File </label>
+                <input type="file" class="form-control" name="importData">
+            </div>          
+          <p>Please select format of file.</p>
+          <select name="file-format" class="form-control my-3">
+            <option selected>Choose format...</option>
+            <option>CSV</option>
+            <option>JSON</option>
+            <option>XLS</option>
+            <option>XLSX</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Import</button>
+        </form>
+      </div>
+  </div>
+</div>
+</div>
+
+<!--Modal: modalConfirmDelete-->
+{% for cat in categories  %}
+<div class="modal fade" id="modalDelete{{ cat.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmDelete"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <small><p class="heading">Are you sure you want to delte SubCategory <strong>{{ cat.category_name }}</strong>?</p></small>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a href="{% url 'categories_list_delete' pk=cat.id %}" class="btn  btn-outline-danger">Yes</a>
+        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->
+{% endfor %}
+</div>
+{% endblock mainblock %}
+

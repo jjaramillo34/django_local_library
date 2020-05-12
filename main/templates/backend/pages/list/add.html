@@ -1,0 +1,94 @@
+{% extends "backend/master.html" %}
+
+{% block mainblock %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Add News</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Add News</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <form action="{% url 'add_news'%}" method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        <div class="row">
+        <div class="col-md">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Add</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="sr-only" for="article_name">Article Name</label>
+                <input type="text" id="article_name" name="article_name" class="form-control" placeholder="Article Name">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="article_short">Article Short Text</label>
+                <input type="text" id="article_short" name="article_short" class="form-control" placeholder="Article Short Text">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="article_author">admin</label>
+                <input type="text" id="article_author" name="article_author" class="form-control" placeholder="admin">
+              </div>            
+              <div class="form-group">
+                <label class="sr-only" for="inputStatus">Status</label>
+                <select id="article_category"  name="article_category" class="form-control custom-select" searchable="Search here.. ">
+                  <option value="" disabled selected>Choose a Category</option>
+                  {% for cat in categories %}
+                    <option value="{{ cat.pk }}">{{ cat.category_name }}</option>                    
+                  {% endfor %}                  
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="inputStatus">Status</label>
+                <select id="article_subcategory"  name="article_subcategory" class="form-control custom-select" searchable="Search here.. ">
+                  <option value="" disabled selected>Choose a SubCategory</option>
+                  {% for cat in subcategories %}
+                    <option value="{{ cat.pk }}">{{ cat.category_name }} | {{ cat.subcategory_name }}</option>                    
+                  {% endfor %}                  
+                </select>
+              </div>            
+              <div class="form-group">
+                <label class= "sr-only" for="inputDescription">Article Description</label>
+                <textarea id="article_body" name="article_body" class="form-control" rows="4" placeholder="Article Body Text"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="labelPicture">Article Picture File</label>
+                <input name="article_picture" type="file" class="form-control-file">
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a href="#" class="btn btn-secondary">Cancel</a>
+          <input type="submit" value="Add News" class="btn btn-success float-right">
+        </div>
+      </div>
+      </form>
+    </section>
+    <!-- /.content -->
+  </div>
+    
+{% endblock mainblock %}

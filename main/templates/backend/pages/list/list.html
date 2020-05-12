@@ -1,0 +1,192 @@
+{% extends "backend/master.html" %}
+
+{% load static %}
+
+{% block mainblock %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>News List</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">List</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">News</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table id="example1" class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 15%">
+                          News Name
+                      </th>
+                      <th style="width: 4%">
+                          File
+                      </th>
+                      <th style="width: 5%">
+                          Author
+                      </th>
+                      <th style="width: 10%">
+                          Category/SubCategory
+                      </th>                      
+                      <th style="width: 4%">
+                          Views
+                      </th>
+                      <th style="width: 12%">
+                          Project Progress
+                      </th>
+                      <th style="width: 6%" class="text-center">
+                          Status
+                      </th>
+                      <th style="width: 8%">
+                          Publish
+                      </th>
+                      <th style="width: 25%">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for articles in news %}
+                  <tr>
+                      <td>
+                          {{ articles.pk }}
+                      </td>
+                      <td>
+                          <a>
+                              {{ articles.article_name }}
+                          </a>
+                          <br/>
+                          <small>
+                              Created {{ articles.article_date }}
+                          </small>
+                      </td>
+                      <td>
+                          <ul class="list-inline">
+                              <li class="list-inline-item">
+                                    <img alt="Avatar" class="table-avatar" src="{{ articles.article_picture_url }}">                              
+                              </li>
+                          </ul>
+                      </td>
+                      <td>
+                          <a>
+                              {{ articles.article_author }}
+                          </a>
+                      </td>                      
+                      <td>
+                          <a>
+                              {{ articles.article_category }}
+                          </a>
+                          <br/>
+                          <small>
+                              {{ articles.article_subcategory }}
+                          </small>
+                      </td>                      
+                      <td>
+                          <a>
+                              {{ articles.article_views }}
+                          </a>
+                      </td>                      
+                      <td class="project_progress">
+                          <div class="progress progress-sm">
+                              <div class="progress-bar bg-green" role="progressbar" aria-volumenow="{{ articles.article_percentage }}" aria-volumemin="0" aria-volumemax="100" style="width: {{ articles.article_percentage }}%">
+                              </div>
+                          </div>
+                          <small>
+                            {% if articles.article_status == 'success'%}
+                              100% Complete
+                            {% elif articles.article_status == 'warning' %}
+                              50% Complete
+                            {% elif articles.article_status == 'danger' %}
+                              0% Complete  
+                            {% endif %}
+                          </small>
+                      </td>
+                      <td class="project-state">
+                          <span class="badge badge-{{ articles.article_status }}">  
+                            {% if articles.article_status == 'success'%}
+                              Success
+                            {% elif articles.article_status == 'warning' %}
+                              Warning
+                            {% elif articles.article_status == 'danger' %}
+                              Danger  
+                            {% endif %}
+                          </span>
+                      </td>
+                      <td>
+                        <style>
+                          .toggle.android { border-radius: 0px;}
+                          .toggle.android .toggle-handle { border-radius: 0px; }
+                        </style>
+                        {% if articles.article_live is TRUE %}
+                        <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info" id="{{ articles.id }}" name="published" 
+                        {% if articles.article_live is True  %}
+                          data-on="Published"                          
+                        {% else %}
+                          data-off="Unpublished"
+                        {% endif %}
+                        >                  
+                        {% else %}                      
+                        <input type="checkbox" data-toggle="toggle" data-style="android" data-onstyle="info" id="{{ articles.id }}" name="published" 
+                        {% if articles.article_live is True  %}
+                          data-on="Published"
+                          checked="checked"
+                        {% else %}
+                          data-off="Unpublished"
+                        {% endif %}
+                        >                  
+                        {% endif %}
+                      </td>                     
+                      </td>
+                      <td class="project-actions text-right">                          
+                          <a type="button" class="btn btn-labeled  btn-sm btn-primary toastsDefaultDanger" href="#">
+                          <span class="btn-label"><i class="fas fa-folder"></i></span>View
+                          </a>                          
+                          <a type="button" class="btn btn-labeled  btn-sm btn-info toastsDefaultDanger" href="{% url 'edit_news' pk=articles.pk %}">
+                          <span class="btn-label"><i class="fas fa-pencil-alt"></i></span>Edit
+                          </a>                                                                              
+                          <a type="button" class="btn btn-labeled  btn-sm btn-danger toastsDefaultDanger" href="{% url 'news_delete' pk=articles.pk %}">
+                          <span class="btn-label"><i class="fas fa-trash"></i></span>Delete
+                          </a>
+                      </td>
+                  </tr>
+                  {% endfor %}                
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+
+  </section>
+
+{% endblock mainblock %}
+
