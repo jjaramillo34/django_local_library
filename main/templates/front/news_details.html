@@ -176,6 +176,19 @@
 <div>
   {{ articles.article_body|linebreaks }}
 </div>
+{% get_comment_form for articles as form %}
+<table>
+  <form action="{% comment_form_target %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <tr>
+      <td colspan="2">
+        <input type="submit" name="submit" value="Post">
+        <input type="submit" name="preview" value="Preview">
+      </td>
+    </tr>
+  </form>
+</table>
 
 {% get_comment_count for articles as comment_count %}
 <div class="py-4 text-center">
