@@ -22,22 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'esd&d)-+=12m*71knzyj0cq$%5c-c*&utsp($y&ns-^c3$rts@'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 
 SECRET_KEY=os.getenv("DJANGO_SECRET_KEY")
 
-#print(SECRET_KEY)
-
-#SECRET_KEY = os.environ.get('SECRET_KEY')
-
-# Read secret key from a file
-#print(SECRET_KEY)
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+
 ALLOWED_HOSTS = [
                 'https://desolate-journey-75211.herokuapp.com/', 
                 'desolate-journey-75211.herokuapp.com' ,
@@ -144,7 +136,7 @@ COMMENTS_XTD_THREADED_EMAILS = False # default to True, use False to allow
                                      # other backend (say Celery based) send
                                      # your emails.
 
-SITE_ID = 1
+SITE_ID = 2
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {

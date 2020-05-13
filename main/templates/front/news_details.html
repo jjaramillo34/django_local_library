@@ -170,15 +170,22 @@
 						<!-- Leave a comment -->
 						<div>
 							
-
-		<div class="comment">
-			<h4 class="text-center">Your comment</h4>
-			<div class="well">
-			{% render_comment_form for articles %}
-			</div>
-		</div>
-		
+						<div class="comment">
+							<h4 class="text-center">Your comment</h4>
+							<div class="well">
+								{% render_comment_form for articles %}
+							</div>
 						</div>
+						<br>
+						</div>
+						<div class="comment">
+							<h4 class="text-center">Your comment</h4>
+							<div class="well">
+								{% render_comment_list for articles %}
+							</div>
+						</div>
+						<br>
+						
 					</div>
 				</div>
 				
