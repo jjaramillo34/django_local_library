@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django_extensions.db.fields import AutoSlugField
 from simple_history.models import HistoricalRecords
 from import_export import resources
+from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 from django.utils import timezone
 from django.db import models
 from datetime import datetime
@@ -31,6 +32,10 @@ class News(models.Model):
 	slug = AutoSlugField(populate_from='article_name', help_text="Slug")
 
 	history_news = HistoricalRecords()
+
+	def get_absolute_url(self):
+        """Returns the url to access a detail record for this book."""
+        return reverse('book-detail', args=[str(self.id)])
 
 	def __str__ (self):
 		return self.article_name
