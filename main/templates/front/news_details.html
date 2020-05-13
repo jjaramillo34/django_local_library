@@ -189,6 +189,12 @@ ha{{ comment_count|pluralize:"s,ve"}} been posted.
 <h4 class="text-center">Your comment</h4>
 <div class="well">
 {% render_comment_form for articles %}
+{% if comment_count %}
+<ul class="media-list">
+{% render_xtdcomment_tree for object %}
+</ul>
+{% endif %}
+{% endblock %}
 </div>
 </div>
 						</div>
