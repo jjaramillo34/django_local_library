@@ -191,10 +191,9 @@ ha{{ comment_count|pluralize:"s,ve"}} been posted.
 {% render_comment_form for articles %}
 {% if comment_count %}
 <ul class="media-list">
-{% render_xtdcomment_tree for object %}
+{% render_xtdcomment_tree for articles %}
 </ul>
 {% endif %}
-{% endblock %}
 </div>
 </div>
 						</div>
