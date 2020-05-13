@@ -169,23 +169,37 @@
 						<br>
 						<!-- Leave a comment -->
 						<div>
-							
-						<div class="comment">
-							<h4 class="text-center">Your comment</h4>
-							<div class="well">
-								{% render_comment_form for articles %}
-							</div>
+							<div class="pb-3">
+  <h1 class="page-header text-center">{{ articles.title }}</h1>
+  <p class="small text-center">{{ articles.article_date|date:"l, j F Y" }}</p>
+</div>
+<div>
+  {{ articles.article_body|linebreaks }}
+</div>
+
+{% get_comment_count for articles as comment_count %}
+<div class="py-4 text-center>
+  <a href="{% url 'blog:post-list' %}">Back to the post list</a>
+  &nbsp;&sdot;&nbsp;
+  {{ comment_count }} comment{{ comment_count|pluralize }}
+  ha{{ comment_count|pluralize:"s,ve"}} been posted.
+</div>
+
+{% if articles.allow_comments %}
+<div class="comment">
+  <h4 class="text-center">Your comment</h4>
+  <div class="well">
+    {% render_comment_form for articles %}
+  </div>
+</div>
+{% endif %}
+
+{% if comment_count %}
+<ul class="media-list">
+  {% render_xtdcomment_tree for articles %}
+</ul>
+{% endif %}
 						</div>
-						<br>
-						</div>
-						<div class="comment">
-							<h4 class="text-center">Your comment</h4>
-							<div class="well">
-								{% render_comment_list for articles %}
-							</div>
-						</div>
-						<br>
-						
 					</div>
 				</div>
 				
