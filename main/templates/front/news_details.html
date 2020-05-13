@@ -185,14 +185,12 @@
 {{ comment_count }} comment{{ comment_count|pluralize }}
 ha{{ comment_count|pluralize:"s,ve"}} been posted.
 </div>
-{% if object.allow_comments %}
 <div class="comment">
 <h4 class="text-center">Your comment</h4>
 <div class="well">
 {% render_comment_form for articles %}
 </div>
 </div>
-{% endif %}
 						</div>
 					</div>
 				</div>
