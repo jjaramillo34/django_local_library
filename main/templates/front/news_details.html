@@ -177,7 +177,7 @@
   {{ articles.article_body|linebreaks }}
 </div>
 
-{% get_comment_count for object as comment_count %}
+{% get_comment_count for articles as comment_count %}
 <div class="py-4 text-center">
   <a href="{% url 'blog:post-list' %}">Back to the post list</a>
   &nbsp;&sdot;&nbsp;
@@ -187,7 +187,7 @@
 {% if comment_count %}
 <hr/>
 <div class="comments">
-  {% render_comment_list for object %}
+  {% render_comment_list for articles %}
 </div>
 {% endif %}
 						</div>
