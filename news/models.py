@@ -34,8 +34,8 @@ class News(models.Model):
 	history_news = HistoricalRecords()
 
 	def get_absolute_url(self):
-        """Returns the url to access a detail record for this book."""
-        return reverse('news', args=[str(self.slug)])
+		"""Returns the url to access a detail record for this book."""
+		return reverse('news', args=[str(self.slug)])
 
 	def __str__ (self):
 		return self.article_name
