@@ -179,7 +179,7 @@
 
 {% get_comment_count for articles as comment_count %}
 <div class="py-4 text-center">
-  <a href="{% url 'blog:post-list' %}">Back to the post list</a>
+  <a href="/">Back to the post list</a>
   &nbsp;&sdot;&nbsp;
   {{ comment_count }} comment{{ comment_count|pluralize }}
   ha{{ comment_count|pluralize:"s,ve" }} been posted.
