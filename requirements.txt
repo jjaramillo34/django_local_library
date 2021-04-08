@@ -5,7 +5,7 @@ chardet==3.0.4
 defusedxml==0.6.0
 diff-match-patch==20181111
 dj-database-url==0.5.0
-Django==3.0.4
+Django==3.0.14
 django-allauth==0.41.0
 django-autocomplete-light==3.5.1
 django-comments-xtd==2.5.1
